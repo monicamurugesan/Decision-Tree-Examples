@@ -1,0 +1,16 @@
+data("iris")
+install.packages("party")
+library(party)
+library(caret)
+attach(iris)
+View(iris)
+inTraining <-createDataPartition(iris$Species,p=0.75,list=F)
+training1<-iris[inTraining,]
+test1<-iris[-inTraining,]
+iris1 <-ctree(Species~.,data=training1)
+irispred<-predict(iris1,test1)
+b <-table(irispred,test1$Species)
+sum(diag(b)/sum(b))
+plot(iris1)
+mean(irispred!=test1$Species)
+plot(iris1,type="simple")
